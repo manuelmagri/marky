@@ -27,6 +27,7 @@ namespace Marky
         private string _currentFilePath = string.Empty;
         private DispatcherTimer _autoSaveTimer;
         private bool _isTemponaryFile = false;
+        private string _vaultPath = string.Empty;
 
         public MainWindow()
         {
@@ -58,7 +59,8 @@ namespace Marky
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            if (!string.IsNullOrEmpty(_currentFilePath)) {
+            if (!string.IsNullOrEmpty(_currentFilePath))
+            {
                 CreateTemponaryFile();
                 //_autoSaveTimer.Stop();
                 //_autoSaveTimer.Start();
@@ -72,13 +74,15 @@ namespace Marky
 
 
         // WebView
-        private async void InitializeWebView() {
+        private async void InitializeWebView()
+        {
 
             try
             {
                 await PreviewWebView.EnsureCoreWebView2Async(null);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 // Log            
                 MessageBox.Show($"WebView Initialization Error: {e.Message}",
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -87,13 +91,15 @@ namespace Marky
                 Editor.Width = new GridLength(1, GridUnitType.Star);
                 Preview.Width = new GridLength(0);
             }
-            
+
         }
 
         // Markdown rendering
-        private void Render_Markdown() {
+        private void Render_Markdown()
+        {
 
-            if (PreviewWebView.CoreWebView2 == null) {
+            if (PreviewWebView.CoreWebView2 == null)
+            {
                 return;
             }
 
@@ -145,7 +151,8 @@ namespace Marky
         }
 
         // Save File
-        private void SaveFile() {
+        private void SaveFile()
+        {
             if (_isTemponaryFile)
             {
 
@@ -168,11 +175,13 @@ namespace Marky
 
 
         // Create temponary file for new documents
-        private void CreateTemponaryFile() { 
+        private void CreateTemponaryFile()
+        {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string appFolder = System.IO.Path.Combine(appDataPath, "Marky");
 
-            if (!Directory.Exists(appFolder)) {
+            if (!Directory.Exists(appFolder))
+            {
                 Directory.CreateDirectory(appFolder);
             }
 
@@ -182,22 +191,26 @@ namespace Marky
             _isTemponaryFile = true;
 
             // If the file doesn't exist, create it
-            if (!File.Exists(tmpFilePath)) {
+            if (!File.Exists(tmpFilePath))
+            {
                 File.WriteAllText(tmpFilePath, "Untitled");
             }
-            
+
         }
 
         // Menu button inside File
-        private void Open_Click(object sender, RoutedEventArgs e) {
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
             OpenFile();
         }
-        
+
         // Save button inside File
-        private void Save_Click(object sender, RoutedEventArgs e) {
-            SaveFile();
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Function not added yet.", "", MessageBoxButton.OK);
         }
 
+        // Save As button inside File
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
             SaveFile();
@@ -205,7 +218,8 @@ namespace Marky
 
 
         // EDITOR ONLY VIEW
-        private void Editor_Only_Click(object sender, RoutedEventArgs e) {
+        private void Editor_Only_Click(object sender, RoutedEventArgs e)
+        {
             Editor.Width = new GridLength(1, GridUnitType.Star);
             Preview.Width = new GridLength(0);
         }
@@ -218,10 +232,88 @@ namespace Marky
         }
 
         // SPLIT VIEW
-        private void Split_View_Click(object sender, RoutedEventArgs e) {
+        private void Split_View_Click(object sender, RoutedEventArgs e)
+        {
             Editor.Width = new GridLength(1, GridUnitType.Star);
             Preview.Width = new GridLength(1, GridUnitType.Star);
         }
-    }
 
+
+        // OPEN VAULT
+        private void Open_Vault_Click(object sender, RoutedEventArgs e)
+        {
+
+            var dialog = new Microsoft.Win32.OpenFolderDialog
+            {
+                Title = "Select the Vault folder",
+                Multiselect = false,
+            };
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                _vaultPath = dialog.FolderName;
+                LoadVault(_vaultPath);
+            }
+
+        }
+
+
+        // LOAD VAULT
+        private void LoadVault(string path) {
+            VaultTree.Items.Clear();
+
+            var rootDir = new DirectoryInfo(path);
+            var rootItem = CreateDirectoryNode(rootDir);
+
+            VaultTree.Items.Add(rootItem);
+
+        }
+
+
+        private TreeViewItem CreateDirectoryNode(DirectoryInfo directory)
+        {
+
+            var dirNode = new TreeViewItem
+            {
+                Header = directory.Name,
+                Tag = directory.FullName
+            };
+
+
+            // folders
+            foreach (var dir in directory.GetDirectories())
+            {
+                dirNode.Items.Add(CreateDirectoryNode(dir));
+            }
+
+            // md files
+            foreach (var file in directory.GetFiles("*.md"))
+            {
+                dirNode.Items.Add(new TreeViewItem
+                {
+                    Header = file.Name,
+                    Tag = file.FullName
+                });
+            }
+
+            return dirNode;
+
+        }
+
+        private void VaultTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (VaultTree.SelectedItem is TreeViewItem item)
+            {
+                string path = item.Tag as string;
+                if (File.Exists(path))
+                {
+                    _currentFilePath = path;
+                    TextBox.Text = _fileManager.OpenFile(path);
+                    _isTemponaryFile = false;
+                }
+            }
+        }
+    }
 }

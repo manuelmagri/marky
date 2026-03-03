@@ -24,6 +24,12 @@
             </MenuItem>
 
 
+            <MenuItem Header="Vault">
+                <MenuItem Header="Open Vault" 
+                          Click="Open_Vault_Click"/>
+                <!-- <MenuItem Header="Close Vault" /> -->
+            </MenuItem>
+
             <MenuItem Header="View">
                 <MenuItem Header="Editor only"
                           Click="Editor_Only_Click"/>
@@ -36,25 +42,33 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Editor" Width="*" />
-            <ColumnDefinition x:Name="Preview" Width="*" />
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition x:Name="Editor" Width="*" />
+                <ColumnDefinition x:Name="Preview" Width="*" />
         </Grid.ColumnDefinitions>
 
-    <!-- EDITOR -->
-    <TextBox x:Name="TextBox"
-             Grid.Column="0"
-             AcceptsReturn="True"
-             AcceptsTab="True"
-             VerticalScrollBarVisibility="Auto"
-             HorizontalScrollBarVisibility="Auto"
-             FontFamily="Consolas"
-             FontSize="14"
-             TextChanged="TextBox_TextChanged">
-    </TextBox>
 
+            <TreeView x:Name="VaultTree" 
+                      Grid.Column="0" 
+                      SelectedItemChanged="VaultTree_SelectedItemChanged">
+                
+            </TreeView>
 
+            <!-- EDITOR -->
+            <TextBox x:Name="TextBox"
+                 Grid.Column="1"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"
+                 FontFamily="Consolas"
+                 FontSize="14"
+                 TextChanged="TextBox_TextChanged">
+            </TextBox>
+
+            <!-- PREVIEW -->
             <wv2:WebView2 x:Name="PreviewWebView"
-                          Grid.Column="1">
+                          Grid.Column="2">
             </wv2:WebView2>
 
         </Grid>
