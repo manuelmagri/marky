@@ -31,22 +31,9 @@
               "RelativeDocumentMoniker": "Marky\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\manuel\\Documents\\GitHub\\marky\\Marky\\MainWindow.xaml.cs",
               "RelativeToolTip": "Marky\\MainWindow.xaml.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAswCgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAAAYwE8AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-03T14:02:53.374Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\manuel\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\manuel\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
-              "RelativeToolTip": "..\\..\\..\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAAAEIAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T14:09:17.69Z",
               "EditorCaption": ""
             },
             {
@@ -58,8 +45,19 @@
               "ToolTip": "C:\\Users\\manuel\\Documents\\GitHub\\marky\\Marky\\MainWindow.xaml",
               "RelativeToolTip": "Marky\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-03T13:58:45.783Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-03T13:58:45.783Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\manuel\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\manuel\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
+              "RelativeToolTip": "..\\..\\..\\source\\repos\\Marky\\Marky\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAAAEIAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T14:09:17.69Z"
             }
           ]
         }

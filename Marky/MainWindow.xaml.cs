@@ -64,7 +64,21 @@ namespace Marky
 
         // WebView
         private async void InitializeWebView() {
-            await PreviewWebView.EnsureCoreWebView2Async(null);
+
+            try
+            {
+                await PreviewWebView.EnsureCoreWebView2Async(null);
+            }
+            catch (Exception e) {
+                // Log            
+                MessageBox.Show($"WebView Initialization Error: {e.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Fallback to markdown rendering without WebView
+                Editor.Width = new GridLength(1, GridUnitType.Star);
+                Preview.Width = new GridLength(0);
+            }
+            
         }
 
         // Markdown
