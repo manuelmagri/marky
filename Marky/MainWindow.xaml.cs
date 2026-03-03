@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.IO;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using Markdig;
@@ -25,6 +26,7 @@ namespace Marky
         private FileManager _fileManager = new FileManager();
         private string _currentFilePath = string.Empty;
         private DispatcherTimer _autoSaveTimer;
+        private bool _isTemponaryFile = false;
 
         public MainWindow()
         {
@@ -37,6 +39,9 @@ namespace Marky
 
             // Preview Side
             InitializeWebView();
+
+            // TMP file
+            CreateTemponaryFile();
         }
 
         // Autosave
@@ -52,11 +57,15 @@ namespace Marky
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
-            if (!string.IsNullOrEmpty(_currentFilePath)) { 
-                _autoSaveTimer.Stop();
-                _autoSaveTimer.Start();
+
+            if (!string.IsNullOrEmpty(_currentFilePath)) {
+                CreateTemponaryFile();
+                //_autoSaveTimer.Stop();
+                //_autoSaveTimer.Start();
             }
+
+            _autoSaveTimer.Stop();
+            _autoSaveTimer.Start();
 
             Render_Markdown();
         }
@@ -81,7 +90,7 @@ namespace Marky
             
         }
 
-        // Markdown
+        // Markdown rendering
         private void Render_Markdown() {
 
             if (PreviewWebView.CoreWebView2 == null) {
@@ -121,6 +130,8 @@ namespace Marky
 
 
         // File management
+
+        // Open File
         private void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -133,18 +144,66 @@ namespace Marky
             }
         }
 
-        private void Open_Click(object sender, RoutedEventArgs e) {
-            OpenFile();
-        }
-        
-        private void Save_Click(object sender, RoutedEventArgs e) {
-            if (!string.IsNullOrEmpty(_currentFilePath)) {
+        // Save File
+        private void SaveFile() {
+            if (_isTemponaryFile)
+            {
+
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "Markdown files (*.md)|*.md";
+
+                if (dialog.ShowDialog() == true)
+                {
+                    _currentFilePath = dialog.FileName;
+                    _fileManager.SaveFile(_currentFilePath, TextBox.Text);
+                    _isTemponaryFile = false;
+                }
+
+            }
+            else if (!string.IsNullOrEmpty(_currentFilePath))
+            {
                 _fileManager.SaveFile(_currentFilePath, TextBox.Text);
             }
         }
 
 
-        // VIEWS
+        // Create temponary file for new documents
+        private void CreateTemponaryFile() { 
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string appFolder = System.IO.Path.Combine(appDataPath, "Marky");
+
+            if (!Directory.Exists(appFolder)) {
+                Directory.CreateDirectory(appFolder);
+            }
+
+            string tmpFilePath = System.IO.Path.Combine(appFolder, "Untitled.md");
+
+            _currentFilePath = tmpFilePath;
+            _isTemponaryFile = true;
+
+            // If the file doesn't exist, create it
+            if (!File.Exists(tmpFilePath)) {
+                File.WriteAllText(tmpFilePath, "Untitled");
+            }
+            
+        }
+
+        // Menu button inside File
+        private void Open_Click(object sender, RoutedEventArgs e) {
+            OpenFile();
+        }
+        
+        // Save button inside File
+        private void Save_Click(object sender, RoutedEventArgs e) {
+            SaveFile();
+        }
+
+        private void Save_As_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFile();
+        }
+
+
         // EDITOR ONLY VIEW
         private void Editor_Only_Click(object sender, RoutedEventArgs e) {
             Editor.Width = new GridLength(1, GridUnitType.Star);
@@ -163,8 +222,6 @@ namespace Marky
             Editor.Width = new GridLength(1, GridUnitType.Star);
             Preview.Width = new GridLength(1, GridUnitType.Star);
         }
-
-
     }
 
 }

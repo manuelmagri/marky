@@ -19,6 +19,8 @@
                           Click="Open_Click"/>
                 <MenuItem Header="Save"
                           Click="Save_Click"/>
+                <MenuItem Header="Save As"
+                          Click="Save_As_Click"/>
             </MenuItem>
 
 
