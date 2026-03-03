@@ -23,7 +23,7 @@ namespace Marky
     public partial class MainWindow : Window
     {
         private FileManager _fileManager = new FileManager();
-        private string _currentFilePath;
+        private string _currentFilePath = string.Empty;
         private DispatcherTimer _autoSaveTimer;
 
         public MainWindow()
@@ -128,6 +128,28 @@ namespace Marky
                 _fileManager.SaveFile(_currentFilePath, TextBox.Text);
             }
         }
+
+
+        // VIEWS
+        // EDITOR ONLY VIEW
+        private void Editor_Only_Click(object sender, RoutedEventArgs e) {
+            Editor.Width = new GridLength(1, GridUnitType.Star);
+            Preview.Width = new GridLength(0);
+        }
+
+        // PREVIEW ONLY VIEW
+        private void Preview_Only_Click(object sender, RoutedEventArgs e)
+        {
+            Editor.Width = new GridLength(0);
+            Preview.Width = new GridLength(1, GridUnitType.Star);
+        }
+
+        // SPLIT VIEW
+        private void Split_View_Click(object sender, RoutedEventArgs e) {
+            Editor.Width = new GridLength(1, GridUnitType.Star);
+            Preview.Width = new GridLength(1, GridUnitType.Star);
+        }
+
 
     }
 

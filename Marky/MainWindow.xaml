@@ -20,15 +20,22 @@
                 <MenuItem Header="Save"
                           Click="Save_Click"/>
             </MenuItem>
+
+
+            <MenuItem Header="View">
+                <MenuItem Header="Editor only"
+                          Click="Editor_Only_Click"/>
+                <MenuItem Header="Preview only"
+                          Click="Preview_Only_Click"/>
+                <MenuItem Header="Split view"
+                          Click="Split_View_Click"/>
+            </MenuItem>
         </Menu>
-    
-   
-    
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition x:Name="Editor" Width="*" />
+            <ColumnDefinition x:Name="Preview" Width="*" />
         </Grid.ColumnDefinitions>
 
     <!-- EDITOR -->
