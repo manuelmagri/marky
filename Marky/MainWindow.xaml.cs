@@ -153,24 +153,26 @@ namespace Marky
         // Save File
         private void SaveFile()
         {
-            if (_isTemponaryFile)
-            {
+            //if (_isTemponaryFile == true)
+            //{
 
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.Filter = "Markdown files (*.md)|*.md";
+            //    SaveFileDialog dialog = new SaveFileDialog();
+            //    dialog.Filter = "Markdown files (*.md)|*.md";
 
-                if (dialog.ShowDialog() == true)
-                {
-                    _currentFilePath = dialog.FileName;
-                    _fileManager.SaveFile(_currentFilePath, TextBox.Text);
-                    _isTemponaryFile = false;
-                }
+            //    if (dialog.ShowDialog() == true)
+            //    {
+            //        _currentFilePath = dialog.FileName;
+            //        _fileManager.SaveFile(_currentFilePath, TextBox.Text);
+            //        _isTemponaryFile = false;
+            //    }
 
-            }
-            else if (!string.IsNullOrEmpty(_currentFilePath))
-            {
-                _fileManager.SaveFile(_currentFilePath, TextBox.Text);
-            }
+            //}
+            //else if (!string.IsNullOrEmpty(_currentFilePath))
+            //{
+            //    _fileManager.SaveFile(_currentFilePath, TextBox.Text);
+            //}
+
+
         }
 
 
@@ -213,7 +215,8 @@ namespace Marky
         // Save As button inside File
         private void Save_As_Click(object sender, RoutedEventArgs e)
         {
-            SaveFile();
+            //SaveFile();
+            MessageBox.Show("Function not added yet.", "", MessageBoxButton.OK);
         }
 
 
