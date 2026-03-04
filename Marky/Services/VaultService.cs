@@ -6,41 +6,27 @@ namespace Marky.Services
 {
     public class VaultService {
 
-        public List<DirectoryItem> LoadVault(string path) {
-            var root = new DirectoryItem(path);
-            return new List<DirectoryItem>() {
-                CreateDirectoryItem(root)
-            };
-        }
+        public DirectoryItem CreateDirectoryItem(DirectoryInfo dir) {
+            var item = new DirectoryItem(dir.Name, dir.FullName, true);
 
-        private DirectoryItem CreateDirectoryItem(DirectoryInfo directory) {
-            var item = new DirectoryItem {
-                Name = directory.Name,
-                FullPath = directory.FullName,
-                IsDirectory = true
-            };
-
-
-            foreach (var dir in directory.GetDirectories()) { 
+            foreach (var directory in dir.GetDirectories()) { 
                 item.Children.Add(CreateDirectoryItem(dir));
             }
 
-            foreach (var file in directory.GetFiles("*.md")) {
-                item.Children.Add(new DirectoryItem { 
-                    Name = file.Name,
-                    FullPath = file.FullName,
-                    IsDirectory = false
-                });
+            foreach (var file in dir.GetFiles("*.md")) {
+                DirectoryItem fileItem = new DirectoryItem(file.Name, file.FullName, false);
+                item.Children.Add(fileItem);
             }
 
             return item;
         }
 
-        
 
-
-
-
-
+        public List<DirectoryItem> LoadVault(string path) {
+            var root = new DirectoryInfo(path);
+            return new List<DirectoryItem> {
+                CreateDirectoryItem(root)
+            };
+        }
     }
 }

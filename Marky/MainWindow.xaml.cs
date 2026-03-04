@@ -28,6 +28,7 @@ namespace Marky
         private DispatcherTimer _autoSaveTimer;
         private bool _isTemponaryFile = false;
         private string _vaultPath = string.Empty;
+        private MarkdownService _markdownService = new();
 
         public MainWindow()
         {
@@ -103,7 +104,7 @@ namespace Marky
                 return;
             }
 
-            string html_body = Markdown.ToHtml(TextBox.Text);
+            string html_body = _markdownService.ConvertToHtml(TextBox.Text);
 
             string full_html = $@"    
                 <html>
