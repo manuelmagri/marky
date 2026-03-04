@@ -28,7 +28,7 @@ A: Yes, Marky will be available on Linux too! My current focus is on the Windows
 
 Q: *There is something ready to see or to test out?*
 
-A: Yes... I guess? Look inside the `Marky` folder. If you are on Windows 11 and you have Visual Studio installed on your system, you can clone this repository and open the solution in the IDE, then compile it and test it as a normal Markdown editor. If you have any problem, don't esitte to reach me out!
+A: Yes... I guess? Look inside the `Marky` folder. If you are on Windows 11 and you have Visual Studio installed on your system, you can clone this repository and open the solution in the IDE, then compile it and test it as a normal Markdown editor. If you have any problem, don't esitate to reach me out!
 
 ---
 
