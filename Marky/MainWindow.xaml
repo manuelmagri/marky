@@ -48,10 +48,14 @@
         </Grid.ColumnDefinitions>
 
 
-            <TreeView x:Name="VaultTree" 
-                      Grid.Column="0" 
-                      SelectedItemChanged="VaultTree_SelectedItemChanged">
-                
+            <TreeView Grid.Column="0"
+                      ItemSource="{Binding VaultItems}}"
+                      SelectedItemChanged="TreeView_SelectedItemChanged">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemSource="{Binding Children}">
+                        <TextBlock Text="{Binding Name}" /> "
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
             </TreeView>
 
             <!-- EDITOR -->

@@ -14,8 +14,11 @@ namespace Marky.Services
             }
 
             foreach (var file in dir.GetFiles("*.md")) {
-                DirectoryItem fileItem = new DirectoryItem(file.Name, file.FullName, false);
-                item.Children.Add(fileItem);
+                item.Children.Add(new DirectoryItem(
+                    file.Name,
+                    file.FullName,
+                    false
+                ));
             }
 
             return item;

@@ -14,6 +14,8 @@ using System.Windows.Threading;
 using Microsoft.Win32;
 using Markdig;
 using Marky.Services;
+using Marky.Models;
+using System.Runtime.CompilerServices;
 
 
 namespace Marky
@@ -34,17 +36,26 @@ namespace Marky
         {
             InitializeComponent();
 
-            // File autosave
-            _autoSaveTimer = new DispatcherTimer();
-            _autoSaveTimer.Interval = TimeSpan.FromMicroseconds(500);
-            _autoSaveTimer.Tick += AutoSaveTimer_Tick;
-
-            // Preview Side
-            InitializeWebView();
-
-            // TMP file
-            CreateTemponaryFile();
+            if (DataContext is ViewModel.MainViewModel vm)
+            {
+                vm.PropertyChanged += Vm_PropertyChanged;
+            }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Autosave
         private void AutoSaveTimer_Tick(object sender, EventArgs e)
@@ -265,7 +276,8 @@ namespace Marky
 
 
         // LOAD VAULT
-        private void LoadVault(string path) {
+        private void LoadVault(string path)
+        {
             VaultTree.Items.Clear();
 
             var rootDir = new DirectoryInfo(path);
@@ -306,16 +318,43 @@ namespace Marky
 
         }
 
-        private void VaultTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (VaultTree.SelectedItem is TreeViewItem item)
+            if (DataContext is ViewModel.MainViewModel vm)
             {
-                string path = item.Tag as string;
-                if (File.Exists(path))
-                {
-                    _currentFilePath = path;
-                    TextBox.Text = _fileManager.OpenFile(path);
-                    _isTemponaryFile = false;
+                vm.SelectedItem = e.NewValue as Models.DirectoryItem;
+            }
+        }
+
+
+        private void Vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+
+            if (e.PropertyName == "PreviewHtml") {
+                if (DataContext is ViewModel.MainViewModel vm) {
+                    PreviewWebView.NavigateToString($@"
+                        <html>
+                        <head>
+                            <meta charset='UTF-8'>
+                        </head>
+                        <body>
+                            {vm.PreviewHtml}
+                        </body>
+                        </html>");
                 }
             }
         }

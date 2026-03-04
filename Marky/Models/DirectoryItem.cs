@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,8 @@ namespace Marky.Models
 
         // For directories, this will hold the child items
         // (both files and subdirectories)
-        public List<DirectoryItem> Children { get; set; } = new();
+        // OLD: public List<DirectoryItem> Children { get; set; } = new();
+        public ObservableCollection<DirectoryItem> Children { get; } = new();
         
     }
 }

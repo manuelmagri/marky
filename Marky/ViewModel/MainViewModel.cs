@@ -9,6 +9,9 @@ namespace Marky.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
+        
+        private Models.DirectoryItem _selectedVaultItem;
+
         private readonly FileManager _fileManager = new();
         private readonly MarkdownService _markdownService = new();
         private readonly VaultService _vaultService = new();
@@ -16,6 +19,25 @@ namespace Marky.ViewModel
         private string _currentFilePath = string.Empty;
         private string _editorText = string.Empty;
         private string _previewHtml = string.Empty;
+
+
+        public MainViewModel()
+        {
+            OpenFileCommand = new RelayCommand(_ => OpenFile());
+            SaveFileCommand = new RelayCommand(_ => SaveFile());
+        }
+
+
+        public Models.DirectoryItem SelectedItem
+        {
+            get => _selectedVaultItem;
+            set {
+                _selectedVaultItem = value;
+                OnPropertyChanged();
+                OpenSelectedFile();
+            }
+        }
+
 
         private ObservableCollection<Models.DirectoryItem> VaultItems { get; set; } = new();
 
@@ -26,12 +48,6 @@ namespace Marky.ViewModel
                 _previewHtml = value;
                 OnPropertyChanged();
             }
-        }
-
-
-        public MainViewModel() { 
-            OpenFileCommand = new RelayCommand(_ => OpenFile());
-            SaveFileCommand = new RelayCommand(_ => SaveFile());
         }
 
 
@@ -83,6 +99,15 @@ namespace Marky.ViewModel
             foreach (var item in items) {
                 VaultItems.Add(item);
             }
+        }
+
+        private void OpenSelectedFile() { 
+            if (SelectedItem == null || SelectedItem.IsDirectory) {
+                return;
+            }
+
+            _currentFilePath = SelectedItem.FullPath;
+            EditorText = _fileManager.OpenFile(_currentFilePath);
         }
     }
 }
