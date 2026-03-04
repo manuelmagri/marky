@@ -44,4 +44,4 @@ More information coming soon.
 
 ---
 
-*Language notes: my mother language is not English. If you see an error or anything else, plesase don't esitate to tell me.*
+*Language notes: my mother language is not English. If you see an error or anything else, please don't esitate to tell me.*
