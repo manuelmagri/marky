@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using Marky.Models;
 using System.IO;
-using Marky.Models;
 
 namespace Marky.Services
 {
-    public class VaultService {
+    public class VaultService
+    {
 
-        public DirectoryItem CreateDirectoryItem(DirectoryInfo dir) {
+        public DirectoryItem CreateDirectoryItem(DirectoryInfo dir)
+        {
             var item = new DirectoryItem(dir.Name, dir.FullName, true);
 
-            foreach (var directory in dir.GetDirectories()) { 
+            foreach (var directory in dir.GetDirectories())
+            {
                 item.Children.Add(CreateDirectoryItem(directory));
             }
 
-            foreach (var file in dir.GetFiles("*.md")) {
+            foreach (var file in dir.GetFiles("*.md"))
+            {
                 item.Children.Add(new DirectoryItem(
                     file.Name,
                     file.FullName,
@@ -25,7 +28,8 @@ namespace Marky.Services
         }
 
 
-        public List<DirectoryItem> LoadVault(string path) {
+        public List<DirectoryItem> LoadVault(string path)
+        {
             var root = new DirectoryInfo(path);
             return new List<DirectoryItem> {
                 CreateDirectoryItem(root)

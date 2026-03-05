@@ -5,12 +5,14 @@ namespace Marky.Services
     public class FileManager
     {
         // 
-        public string OpenFile(string path) {
+        public string OpenFile(string path)
+        {
             return File.ReadAllText(path);
         }
 
         // 
-        public void SaveFile(string path, string content) {
+        public void SaveFile(string path, string content)
+        {
             File.WriteAllText(path, content);
         }
 

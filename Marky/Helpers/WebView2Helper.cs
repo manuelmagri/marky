@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Web.WebView2.Wpf;
+﻿using Microsoft.Web.WebView2.Wpf;
 using System.Windows;
-using System.Security.Policy;
 
 namespace Marky.Helpers
 {
@@ -20,16 +13,20 @@ namespace Marky.Helpers
         );
 
 
-        public static string GetHtml(DependencyObject obj) {
+        public static string GetHtml(DependencyObject obj)
+        {
             return (string)obj.GetValue(HtmlProperty);
         }
 
-        public static void SetHtml(DependencyObject obj, string value) {
+        public static void SetHtml(DependencyObject obj, string value)
+        {
             obj.SetValue(HtmlProperty, value);
         }
 
-        private static async void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {
-            if (obj is WebView2 webView) {
+        private static async void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            if (obj is WebView2 webView)
+            {
                 await webView.EnsureCoreWebView2Async();
 
                 string html = e.NewValue as string ?? "";

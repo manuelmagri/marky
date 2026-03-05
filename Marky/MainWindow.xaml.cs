@@ -1,21 +1,9 @@
-﻿using System.Text;
+﻿using Marky.Services;
+using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-using System.IO;
 using System.Windows.Threading;
-using Microsoft.Win32;
-using Markdig;
-using Marky.Services;
-using Marky.Models;
-using System.Runtime.CompilerServices;
 
 
 namespace Marky
@@ -33,13 +21,34 @@ namespace Marky
         public MainWindow()
         {
             InitializeComponent();
+
             _autoSaveTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
             _autoSaveTimer.Tick += AutoSaveTimer_Tick;
-            
+
+
             var vm = new ViewModel.MainViewModel();
             vm.PropertyChanged += Vm_PropertyChanged;
-            DataContext = vm;
-            
+            DataContext = vm;  // <-- Assign DataContext FIRST
+
+            // Now vm is available through DataContext
+            if (vm.HasLastVault())
+            {
+                vm.LoadVault(vm.GetLastVault()!);
+            }
+            else
+            {
+                var welcomeDialog = new WelcomeDialog();
+                welcomeDialog.ShowDialog();
+
+                if (welcomeDialog.DialogResult == true && welcomeDialog.SelectedVaultPath != null)
+                {
+                    vm.SaveLastVaultPath(welcomeDialog.SelectedVaultPath);
+                    vm.LoadVault(welcomeDialog.SelectedVaultPath);
+                }
+            }
+
+
+
             InitializeWebView();
         }
 
@@ -256,8 +265,10 @@ namespace Marky
         private void Vm_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
 
-            if (e.PropertyName == "PreviewHtml") {
-                if (DataContext is ViewModel.MainViewModel vm) {
+            if (e.PropertyName == "PreviewHtml")
+            {
+                if (DataContext is ViewModel.MainViewModel vm)
+                {
                     PreviewWebView.NavigateToString($@"
                         <html>
                         <head>

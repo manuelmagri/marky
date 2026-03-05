@@ -15,17 +15,21 @@ namespace Marky.Helpers
         );
 
 
-        public static object GetSelectedItem(DependencyObject obj) {
+        public static object GetSelectedItem(DependencyObject obj)
+        {
             return obj.GetValue(SelectedItemProperty);
         }
 
-        public static void SetSelectedItem(DependencyObject obj, object value) {
+        public static void SetSelectedItem(DependencyObject obj, object value)
+        {
             obj.SetValue(SelectedItemProperty, value);
         }
 
 
-        public static void OnSelectedItemChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {
-            if (obj is TreeView treeView) {
+        public static void OnSelectedItemChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            if (obj is TreeView treeView)
+            {
                 treeView.SelectedItemChanged -= TreeView_SelectedItemChanged;
                 treeView.SelectedItemChanged += TreeView_SelectedItemChanged;
             }

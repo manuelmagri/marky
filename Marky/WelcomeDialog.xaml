@@ -1,0 +1,40 @@
+<Window x:Class="Marky.WelcomeDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Welcome to Marky"
+        Height="250" Width="400"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Welcome to Marky!"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <TextBlock Text="Choose how to get started:"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"
+                       FontSize="14"/>
+
+            <Button Content="Open Existing Vault"
+                    Click="OpenExistingVault_Click"
+                    Height="40"
+                    Margin="0,0,0,10"
+                    Padding="20,5"/>
+
+            <Button Content="Create New Vault"
+                    Click="CreateNewVault_Click"
+                    Height="40"
+                    Padding="20,5"/>
+        </StackPanel>
+    </Grid>
+</Window>

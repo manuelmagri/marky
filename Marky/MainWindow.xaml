@@ -27,6 +27,8 @@
             <MenuItem Header="Vault">
                 <MenuItem Header="Open Vault" 
                           Command="{Binding OpenVaultCommand}"/>
+                <MenuItem Header="Create New Vault" 
+                          Command="{Binding CreateVaultCommand}"/>
             </MenuItem>
 
             <MenuItem Header="View">
