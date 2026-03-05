@@ -28,18 +28,19 @@ namespace Marky
         private FileManager _fileManager = new FileManager();
         private string _currentFilePath = string.Empty;
         private DispatcherTimer _autoSaveTimer;
-        private bool _isTemponaryFile = false;
-        private string _vaultPath = string.Empty;
         private MarkdownService _markdownService = new();
 
         public MainWindow()
         {
             InitializeComponent();
-
-            if (DataContext is ViewModel.MainViewModel vm)
-            {
-                vm.PropertyChanged += Vm_PropertyChanged;
-            }
+            _autoSaveTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+            _autoSaveTimer.Tick += AutoSaveTimer_Tick;
+            
+            var vm = new ViewModel.MainViewModel();
+            vm.PropertyChanged += Vm_PropertyChanged;
+            DataContext = vm;
+            
+            InitializeWebView();
         }
 
 
@@ -58,7 +59,7 @@ namespace Marky
 
 
         // Autosave
-        private void AutoSaveTimer_Tick(object sender, EventArgs e)
+        private void AutoSaveTimer_Tick(object? sender, EventArgs e)
         {
             _autoSaveTimer.Stop();
 
@@ -202,7 +203,6 @@ namespace Marky
             string tmpFilePath = System.IO.Path.Combine(appFolder, "Untitled.md");
 
             _currentFilePath = tmpFilePath;
-            _isTemponaryFile = true;
 
             // If the file doesn't exist, create it
             if (!File.Exists(tmpFilePath))
@@ -253,95 +253,7 @@ namespace Marky
             Preview.Width = new GridLength(1, GridUnitType.Star);
         }
 
-
-        // OPEN VAULT
-        private void Open_Vault_Click(object sender, RoutedEventArgs e)
-        {
-
-            var dialog = new Microsoft.Win32.OpenFolderDialog
-            {
-                Title = "Select the Vault folder",
-                Multiselect = false,
-            };
-
-            bool? result = dialog.ShowDialog();
-
-            if (result == true)
-            {
-                _vaultPath = dialog.FolderName;
-                LoadVault(_vaultPath);
-            }
-
-        }
-
-
-        // LOAD VAULT
-        private void LoadVault(string path)
-        {
-            VaultTree.Items.Clear();
-
-            var rootDir = new DirectoryInfo(path);
-            var rootItem = CreateDirectoryNode(rootDir);
-
-            VaultTree.Items.Add(rootItem);
-
-        }
-
-
-        private TreeViewItem CreateDirectoryNode(DirectoryInfo directory)
-        {
-
-            var dirNode = new TreeViewItem
-            {
-                Header = directory.Name,
-                Tag = directory.FullName
-            };
-
-
-            // folders
-            foreach (var dir in directory.GetDirectories())
-            {
-                dirNode.Items.Add(CreateDirectoryNode(dir));
-            }
-
-            // md files
-            foreach (var file in directory.GetFiles("*.md"))
-            {
-                dirNode.Items.Add(new TreeViewItem
-                {
-                    Header = file.Name,
-                    Tag = file.FullName
-                });
-            }
-
-            return dirNode;
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (DataContext is ViewModel.MainViewModel vm)
-            {
-                vm.SelectedItem = e.NewValue as Models.DirectoryItem;
-            }
-        }
-
-
-        private void Vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Vm_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
 
             if (e.PropertyName == "PreviewHtml") {

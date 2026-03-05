@@ -10,7 +10,7 @@ namespace Marky.ViewModel
     public class MainViewModel : BaseViewModel
     {
         
-        private Models.DirectoryItem _selectedVaultItem;
+        private Models.DirectoryItem? _selectedVaultItem;
 
         private readonly FileManager _fileManager = new();
         private readonly MarkdownService _markdownService = new();
@@ -25,10 +25,11 @@ namespace Marky.ViewModel
         {
             OpenFileCommand = new RelayCommand(_ => OpenFile());
             SaveFileCommand = new RelayCommand(_ => SaveFile());
+            OpenVaultCommand = new RelayCommand(_ => OpenVault());
         }
 
 
-        public Models.DirectoryItem SelectedItem
+        public Models.DirectoryItem? SelectedItem
         {
             get => _selectedVaultItem;
             set {
@@ -39,7 +40,7 @@ namespace Marky.ViewModel
         }
 
 
-        private ObservableCollection<Models.DirectoryItem> VaultItems { get; set; } = new();
+        public ObservableCollection<Models.DirectoryItem> VaultItems { get; } = new();
 
         public string PreviewHtml { 
             get => _previewHtml;
@@ -64,6 +65,7 @@ namespace Marky.ViewModel
 
         public ICommand OpenFileCommand { get; }
         public ICommand SaveFileCommand { get; }
+        public ICommand OpenVaultCommand { get; }
 
 
         private void OpenFile() {
@@ -93,11 +95,22 @@ namespace Marky.ViewModel
         }
 
 
-        private void LoadVault(string path) { 
+        public void LoadVault(string path) { 
             VaultItems.Clear();
             var items = _vaultService.LoadVault(path);
             foreach (var item in items) {
                 VaultItems.Add(item);
+            }
+        }
+
+        private void OpenVault() {
+            var dialog = new Microsoft.Win32.OpenFolderDialog {
+                Title = "Select the Vault folder",
+                Multiselect = false,
+            };
+
+            if (dialog.ShowDialog() == true) {
+                LoadVault(dialog.FolderName);
             }
         }
 

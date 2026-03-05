@@ -7,27 +7,26 @@
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
         Title="Marky" Height="600" Width="1000"
-        xmlns:vm="clr-namespace:Marky.ViewModel">
+        xmlns:vm="clr-namespace:Marky.ViewModel"
+        xmlns:helpers="clr-namespace:Marky.Helpers">
 
 
-    <!-- ...  --> 
+    <!-- ...  -->
     <DockPanel>
-        
+
         <!-- ... -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Open"
                           Command="{Binding OpenFileCommand}"/>
                 <MenuItem Header="Save"
-                          Click="{Binding SaveFileCommand}"/>
-                <MenuItem Header="Save As"
-                          Click="Save_As_Click"/>
+                          Command="{Binding SaveFileCommand}"/>
             </MenuItem>
 
 
             <MenuItem Header="Vault">
                 <MenuItem Header="Open Vault" 
-                          Click="Open_Vault_Click"/>
+                          Command="{Binding OpenVaultCommand}"/>
             </MenuItem>
 
             <MenuItem Header="View">
@@ -40,20 +39,20 @@
             </MenuItem>
         </Menu>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition x:Name="Editor" Width="*" />
                 <ColumnDefinition x:Name="Preview" Width="*" />
-        </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
 
-
-            <TreeView Grid.Column="0"
-                      ItemSource="{Binding VaultItems}}"
-                      SelectedItemChanged="TreeView_SelectedItemChanged">
+            <!-- SIDEBAR-VAULT -->
+            <TreeView x:Name="VaultTree" Grid.Column="0"
+                      ItemsSource="{Binding VaultItems}"
+                      helpers:TreeViewHelper.SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemSource="{Binding Children}">
-                        <TextBlock Text="{Binding Name}" /> "
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding Name}" />
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
@@ -67,16 +66,15 @@
                  HorizontalScrollBarVisibility="Auto"
                  FontFamily="Consolas"
                  FontSize="14"
-                 TextChanged="{Binding EditorText, UpdateSourceTrigger=PropertyChanged}">
+                 Text="{Binding EditorText, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
             <!-- PREVIEW -->
-            <wv2:WebView2 x:Name="PreviewWebView"
-                          Grid.Column="2">
-            </wv2:WebView2>
+            <wv2:WebView2 x:Name="PreviewWebView" Grid.Column="2" 
+                          helpers:WebView2Helper.Html="{Binding PreviewHtml}"/>
 
         </Grid>
-        
-   </DockPanel>
-    
+
+    </DockPanel>
+
 </Window>

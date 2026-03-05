@@ -20,11 +20,30 @@ namespace Marky.Helpers
         );
 
 
+        public static string GetHtml(DependencyObject obj) {
+            return (string)obj.GetValue(HtmlProperty);
+        }
 
-        public static string GetHtml(DependencyObject obj) { }
+        public static void SetHtml(DependencyObject obj, string value) {
+            obj.SetValue(HtmlProperty, value);
+        }
 
-        public static void SetHtml(DependencyObject obj, string value) { }
+        private static async void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {
+            if (obj is WebView2 webView) {
+                await webView.EnsureCoreWebView2Async();
 
-        private static async void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) { }
+                string html = e.NewValue as string ?? "";
+
+                webView.NavigateToString($@"
+                    <html>
+                    <head>
+                        <meta charset='UTF-8'>
+                    </head>
+                    <body>
+                        {html}
+                    </body>
+                    </html>");
+            }
+        }
     }
 }
