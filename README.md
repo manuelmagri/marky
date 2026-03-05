@@ -8,7 +8,8 @@ A Markdown editor for Windows (and a project made for fun and to improve my codi
 - Can open Markdown files
 - Can edit Markdown files
 - Save works partially. You can only save a file as a new  
-- Can open folders as Vaults (like Obsidian) and show the tree on the sidebar
+- Can open and create folders as Vaults (like Obsidian) and show the tree on the sidebar
+- Open file works partially. It doesn't open a file from the sidebar. All files must be opened from the top bar File->Open 
 - There are three different views:
     1. Editor view: this view is like a blank notepad window where you can write.  
     2. Preview view (WebView2): this view shows what what you wrote in the editor view looks like.
