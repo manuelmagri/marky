@@ -213,15 +213,7 @@ namespace Marky.ViewModel
                     Directory.CreateDirectory(fullPath);
 
                     string welcomeFilePath = Path.Combine(fullPath, "Welcome.md");
-                    string welcomeContent = @"# Welcome to Marky!
-
-                        Start writing your markdown files here.
-
-                        ## Features
-                        - Live preview
-                        - Vault-based file management
-                        - Auto-save
-                        ";
+                    string welcomeContent = "# Welcome to Marky! \n\nStart writing your markdown files here. \n\n## Features \n- Live preview \n- Vault-based file management \n- Auto-save";
                     File.WriteAllText(welcomeFilePath, welcomeContent);
                 }
 

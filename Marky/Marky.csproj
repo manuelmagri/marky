@@ -9,8 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="1.1.1" />
+    <PackageReference Include="Markdig" Version="1.1.1" /> <!-- This package will be removed soon. -->
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3800.47" />
+    <PackageReference Include="WPF-UI" Version="4.2.0" />
   </ItemGroup>
 
 </Project>

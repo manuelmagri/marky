@@ -4,6 +4,18 @@
              xmlns:local="clr-namespace:Marky"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
+        <!-- WPF UI -->
+        
+        <!--
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Light" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+        -->
+        
     </Application.Resources>
 </Application>
