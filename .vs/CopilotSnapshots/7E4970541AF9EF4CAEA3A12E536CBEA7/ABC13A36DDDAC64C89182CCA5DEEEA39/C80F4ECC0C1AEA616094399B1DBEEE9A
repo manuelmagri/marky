@@ -1,0 +1,78 @@
+﻿<Window x:Class="Marky.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Marky"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        mc:Ignorable="d"
+        Title="Marky" Height="600" Width="1000">
+
+
+    <!-- ...  --> 
+    <DockPanel>
+        
+        <!-- ... -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open"
+                          Click="Open_Click"/>
+                <MenuItem Header="Save"
+                          Click="Save_Click"/>
+                <MenuItem Header="Save As"
+                          Click="Save_As_Click"/>
+            </MenuItem>
+
+
+            <MenuItem Header="Vault">
+                <MenuItem Header="Open Vault" 
+                          Click="Open_Vault_Click"/>
+                <!-- <MenuItem Header="Close Vault" /> -->
+            </MenuItem>
+
+            <MenuItem Header="View">
+                <MenuItem Header="Editor only"
+                          Click="Editor_Only_Click"/>
+                <MenuItem Header="Preview only"
+                          Click="Preview_Only_Click"/>
+                <MenuItem Header="Split view"
+                          Click="Split_View_Click"/>
+            </MenuItem>
+        </Menu>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition x:Name="Editor" Width="*" />
+                <ColumnDefinition x:Name="Preview" Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+            <TreeView x:Name="VaultTree" 
+                      Grid.Column="0" 
+                      SelectedItemChanged="VaultTree_SelectedItemChanged">
+                
+            </TreeView>
+
+            <!-- EDITOR -->
+            <TextBox x:Name="TextBox"
+                 Grid.Column="1"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"
+                 FontFamily="Consolas"
+                 FontSize="14"
+                 TextChanged="TextBox_TextChanged">
+            </TextBox>
+
+            <!-- PREVIEW -->
+            <wv2:WebView2 x:Name="PreviewWebView"
+                          Grid.Column="2">
+            </wv2:WebView2>
+
+        </Grid>
+        
+   </DockPanel>
+    
+</Window>
