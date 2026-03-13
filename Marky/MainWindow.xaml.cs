@@ -3,6 +3,17 @@ using Microsoft.Win32;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+<<<<<<< HEAD
+=======
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 using System.Windows.Threading;
 
 
@@ -16,7 +27,10 @@ namespace Marky
         private FileManager _fileManager = new FileManager();
         private string _currentFilePath = string.Empty;
         private DispatcherTimer _autoSaveTimer;
+<<<<<<< HEAD
         private MarkdownService _markdownService = new();
+=======
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 
         public MainWindow()
         {
@@ -25,6 +39,7 @@ namespace Marky
             _autoSaveTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
             _autoSaveTimer.Tick += AutoSaveTimer_Tick;
 
+<<<<<<< HEAD
 
             var vm = new ViewModel.MainViewModel();
             vm.PropertyChanged += Vm_PropertyChanged;
@@ -49,6 +64,9 @@ namespace Marky
 
 
 
+=======
+            // Preview Side
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
             InitializeWebView();
         }
 
@@ -80,16 +98,20 @@ namespace Marky
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+<<<<<<< HEAD
 
             if (!string.IsNullOrEmpty(_currentFilePath))
             {
                 CreateTemponaryFile();
                 //_autoSaveTimer.Stop();
                 //_autoSaveTimer.Start();
+=======
+            
+            if (!string.IsNullOrEmpty(_currentFilePath)) { 
+                _autoSaveTimer.Stop();
+                _autoSaveTimer.Start();
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
             }
-
-            _autoSaveTimer.Stop();
-            _autoSaveTimer.Start();
 
             Render_Markdown();
         }
@@ -116,9 +138,14 @@ namespace Marky
 
         }
 
+<<<<<<< HEAD
         // Markdown rendering
         private void Render_Markdown()
         {
+=======
+        // Markdown
+        private void Render_Markdown() {
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 
             if (PreviewWebView.CoreWebView2 == null)
             {
@@ -158,8 +185,6 @@ namespace Marky
 
 
         // File management
-
-        // Open File
         private void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -172,6 +197,7 @@ namespace Marky
             }
         }
 
+<<<<<<< HEAD
         // Save File
         private void SaveFile()
         {
@@ -241,6 +267,20 @@ namespace Marky
         }
 
 
+=======
+        private void Open_Click(object sender, RoutedEventArgs e) {
+            OpenFile();
+        }
+        
+        private void Save_Click(object sender, RoutedEventArgs e) {
+            if (!string.IsNullOrEmpty(_currentFilePath)) {
+                _fileManager.SaveFile(_currentFilePath, TextBox.Text);
+            }
+        }
+
+
+        // VIEWS
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
         // EDITOR ONLY VIEW
         private void Editor_Only_Click(object sender, RoutedEventArgs e)
         {
@@ -261,6 +301,12 @@ namespace Marky
             Editor.Width = new GridLength(1, GridUnitType.Star);
             Preview.Width = new GridLength(1, GridUnitType.Star);
         }
+<<<<<<< HEAD
+=======
+
+
+    }
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 
         private void Vm_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

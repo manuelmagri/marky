@@ -20,7 +20,11 @@
                 <MenuItem Header="Open"
                           Command="{Binding OpenFileCommand}"/>
                 <MenuItem Header="Save"
+<<<<<<< HEAD
                           Command="{Binding SaveFileCommand}"/>
+=======
+                          Click="Save_Click"/>
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
             </MenuItem>
 
 
