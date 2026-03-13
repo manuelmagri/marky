@@ -24,6 +24,9 @@
                           Command="{Binding SaveFileCommand}"/>
 =======
                           Click="Save_Click"/>
+<<<<<<< HEAD
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
+=======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
             </MenuItem>
 
