@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
+=======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
 =======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
@@ -32,7 +35,10 @@ namespace Marky
         private DispatcherTimer _autoSaveTimer;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         private MarkdownService _markdownService = new();
+=======
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 =======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
 =======
@@ -45,6 +51,7 @@ namespace Marky
             _autoSaveTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
             _autoSaveTimer.Tick += AutoSaveTimer_Tick;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -71,6 +78,9 @@ namespace Marky
 
 
 
+=======
+            // Preview Side
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 =======
             // Preview Side
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
@@ -110,6 +120,7 @@ namespace Marky
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             if (!string.IsNullOrEmpty(_currentFilePath))
             {
@@ -119,11 +130,16 @@ namespace Marky
 =======
 =======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
+=======
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
             
             if (!string.IsNullOrEmpty(_currentFilePath)) { 
                 _autoSaveTimer.Stop();
                 _autoSaveTimer.Start();
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
+=======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
 =======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
@@ -156,10 +172,13 @@ namespace Marky
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Markdown rendering
         private void Render_Markdown()
         {
 =======
+=======
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 =======
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
         // Markdown
@@ -216,6 +235,7 @@ namespace Marky
             }
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         // Save File
@@ -315,6 +335,20 @@ namespace Marky
 
         // VIEWS
 >>>>>>> parent of 9aa4daa (Temp file and "Save As")
+=======
+        private void Open_Click(object sender, RoutedEventArgs e) {
+            OpenFile();
+        }
+        
+        private void Save_Click(object sender, RoutedEventArgs e) {
+            if (!string.IsNullOrEmpty(_currentFilePath)) {
+                _fileManager.SaveFile(_currentFilePath, TextBox.Text);
+            }
+        }
+
+
+        // VIEWS
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
         // EDITOR ONLY VIEW
         private void Editor_Only_Click(object sender, RoutedEventArgs e)
         {
@@ -337,8 +371,14 @@ namespace Marky
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
+=======
+
+
+    }
+>>>>>>> parent of 9aa4daa (Temp file and "Save As")
 
 
     }
